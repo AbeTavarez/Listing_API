@@ -32,6 +32,7 @@ const server = app.listen(
   PORT,
   console.log(
     `Server Running in -> ${process.env.NODE_ENV} mode on port ${PORT}...`
+      .bgMagenta.bold
   )
 );
 
