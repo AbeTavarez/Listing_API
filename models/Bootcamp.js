@@ -39,11 +39,11 @@ const BootcampSchema = new mongoose.Schema({
     //GeoJSON Point
     type: String,
     enum: ['Point'],
-    required: true,
+    required: false,
   },
   coordinates: {
     type: [Number],
-    required: true,
+    required: false,
     index: '2dsphere',
   },
   formattedAddress: String,
@@ -68,7 +68,7 @@ const BootcampSchema = new mongoose.Schema({
     max: [10, 'Rating must can not be more than 10'],
   },
   averageCost: Number,
-  phooto: {
+  photo: {
     type: String,
     default: 'no-photo.jpg',
   },

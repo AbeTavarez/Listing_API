@@ -16,6 +16,9 @@ const bootcamps = require('./routes/bootcamps');
 //* Ints Express Server App
 const app = express();
 
+//* Body Parser -> is a express middleware
+app.use(express.json());
+
 //* Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'.yellow.bold));
@@ -32,7 +35,7 @@ const server = app.listen(
   PORT,
   console.log(
     `Server Running in -> ${process.env.NODE_ENV} mode on port ${PORT}...`
-      .bgMagenta.bold
+      .bgMagenta3
   )
 );
 
