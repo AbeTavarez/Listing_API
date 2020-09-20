@@ -42,7 +42,7 @@ exports.createBootCamp = asyncHandler(async (req, res, next) => {
     data: bootcamp,
   });
 
-  next(err);
+  // next(err);
 });
 
 //* @desc Update bootcamp
