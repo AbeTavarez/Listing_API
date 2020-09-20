@@ -97,4 +97,6 @@ BootcampSchema.pre('save', function (next) {
   next();
 });
 
+//* Geocoder & create location field
+
 module.exports = mongoose.model('Bootcamp', BootcampSchema);
