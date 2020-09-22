@@ -6,7 +6,8 @@ const asyncHandler = require('../middleware/async');
 //* @route GET /api/v1/bootcamps
 //* @access Public
 exports.getBootCamps = asyncHandler(async (req, res, next) => {
-  const bootcamps = await Bootcamp.find();
+  console.log(req.query);
+  const bootcamps = await Bootcamp.find(req.query);
 
   res
     .status(200)
@@ -102,7 +103,7 @@ exports.getBootCampsInRadius = asyncHandler(async (req, res, next) => {
     location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
   });
 
-  res.status(200).jso({
+  res.status(200).json({
     success: true,
     count: bootcamps.length,
     data: bootcamps,
