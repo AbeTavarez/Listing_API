@@ -7,6 +7,7 @@ const asyncHandler = require('../middleware/async');
 //* @access Public
 exports.getBootCamps = asyncHandler(async (req, res, next) => {
   let query;
+  //* query handler
   let queryStr = JSON.stringify(req.query);
   queryStr = queryStr.replace(
     /\b(gt|gte|lt|lte|in)\b/g,
@@ -14,7 +15,10 @@ exports.getBootCamps = asyncHandler(async (req, res, next) => {
   );
   console.log(queryStr);
 
-  const bootcamps = await Bootcamp.find();
+  //8 if query is empty return all
+  query = Bootcamp.find(JSON.parse(queryStr));
+
+  const bootcamps = await query;
 
   res
     .status(200)
