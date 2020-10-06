@@ -7,17 +7,48 @@ const asyncHandler = require('../middleware/async');
 //* @access Public
 exports.getBootCamps = asyncHandler(async (req, res, next) => {
   let query;
-  //* query handler
-  let queryStr = JSON.stringify(req.query);
+  //* copy of request.query
+  const reqQuery = { ...req.query };
+
+  //* Fields to exclude
+  const removeFields = ['select', 'sort', 'page', 'limit'];
+
+  //* Loop over removeFields and delete them from reqQuery
+  removeFields.forEach((param) => delete reqQuery[param]);
+
+  //* Create query string
+  let queryStr = JSON.stringify(reqQuery);
+  //* Create operators ($gt, $gte, etc)
   queryStr = queryStr.replace(
     /\b(gt|gte|lt|lte|in)\b/g,
     (match) => `$${match}`
   );
-  console.log(queryStr);
 
-  //8 if query is empty return all
+  //* Finding resource //if query is empty return all
   query = Bootcamp.find(JSON.parse(queryStr));
 
+  //* Select Fields
+  if (req.query.select) {
+    const fields = req.query.select.split(',').join(' ');
+    query = query.select(fields);
+  }
+
+  //* Sort
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(',').join(' ');
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort('-createdAt');
+  }
+
+  //* Pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 1;
+  const skip = (page - 1) * limit;
+
+  query = query.skip(skip).limit(limit);
+
+  //* Executing query
   const bootcamps = await query;
 
   res
