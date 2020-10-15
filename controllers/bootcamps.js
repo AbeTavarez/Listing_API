@@ -136,7 +136,7 @@ exports.updateBootCamp = asyncHandler(async (req, res, next) => {
 //* @route DELETE /api/v1/bootcamps/:id
 //* @access Private
 exports.deleteBootCamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+  const bootcamp = await Bootcamp.findById(req.params.id);
 
   if (!bootcamp) {
     //* Id not in DataBase
@@ -145,9 +145,10 @@ exports.deleteBootCamp = asyncHandler(async (req, res, next) => {
       404
     );
   }
-  res.status(200).json({ success: true, msg: 'Bootcamp Deleted' });
 
-  next(err);
+  bootcamp.remove(); //trigges middleware
+
+  res.status(200).json({ success: true, msg: 'Bootcamp Deleted' });
 });
 //* @desc Get bootcamps within a radius
 //* @route GET /api/v1/bootcamps/radius/:zipcode/:distance
