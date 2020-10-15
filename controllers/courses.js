@@ -8,10 +8,12 @@ const Course = require('../models/Course');
 //* @access Public
 exports.getCourses = asyncHandler(async (req, res, next) => {
   let query;
-
+  //* finds courses for either a specific bootcamp id or all courses
   if (req.params.bootcampId) {
+    // finds courses from the bootcamp id
     query = Course.find({ bootcamp: req.params.bootcampId });
   } else {
+    // get all courses from all bootcamps
     query = Course.find();
   }
   const courses = await query;
