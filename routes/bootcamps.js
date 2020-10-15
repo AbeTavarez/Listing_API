@@ -1,4 +1,6 @@
 const express = require('express');
+
+//* Controller Methods
 const {
   getBootCamps,
   getBootCamp,
@@ -12,6 +14,8 @@ const {
 const router = express.Router();
 
 //* Routes
+
+//* GET
 router.route('/radius/:zipcode/:distance').get(getBootCampsInRadius);
 
 router.route('/').get(getBootCamps).post(createBootCamp);
