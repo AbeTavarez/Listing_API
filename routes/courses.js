@@ -5,7 +5,7 @@ const express = require('express');
 const { getCourses } = require('../controllers/courses');
 
 // Router instance
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 //* Routes
 
