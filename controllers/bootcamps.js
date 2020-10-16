@@ -138,6 +138,7 @@ exports.updateBootCamp = asyncHandler(async (req, res, next) => {
 exports.deleteBootCamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findById(req.params.id);
 
+  //* Make sure bootcamp exist
   if (!bootcamp) {
     //* Id not in DataBase
     return new ErrorResponce(
