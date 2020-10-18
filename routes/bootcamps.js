@@ -11,12 +11,13 @@ const {
 } = require('../controllers/bootcamps');
 
 //* Include other resource routers
-const courseRouter = require('./courses');
+const courseRouter = require('./courses'); //! courseRouter
 
 //*Creates Router
 const router = express.Router();
 
 //* Re-route into other resourse routers
+//! anyy request that hits this path will get re-routed to -courseRouter
 router.use('/:bootcampId/courses', courseRouter);
 
 //* Routes
