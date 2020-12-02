@@ -10,13 +10,20 @@ const {
   deleteCourse,
 } = require('../controllers/courses');
 
+const Course = require('../models/Course');
+const advancedResults = require('../middleware/advancedResults')
+
 // Router instance
 const router = express.Router({ mergeParams: true });
 
 //* Routes ////////////////////////////////////////////
 
 //* '/' === /courses
-router.route('/').get(getCourses).post(addCourse);
+//path: bootcamp, select: 'name description' -> populates bootcamp
+router.route('/').get(advancedResults(Course, {
+  path: 'bootcamp',
+  select: 'name description'
+}),getCourses).post(addCourse);
 
 //* '/:id' === /courses/123idOfSomeKind
 router.route('/:id').get(getCourse).put(updateCourse).delete(deleteCourse);

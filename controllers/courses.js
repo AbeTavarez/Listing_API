@@ -9,26 +9,18 @@ const { json } = require('express');
 //* @route GET /api/v1/bootcamps/:bootcampId/courses
 //* @access Public
 exports.getCourses = asyncHandler(async (req, res, next) => {
-  let query;
-  //* finds courses for either a specific bootcamp id or all courses
   if (req.params.bootcampId) {
     //* finds courses with the bootcamp id
-    query = Course.find({ bootcamp: req.params.bootcampId });
-  } else {
-    //* Or gets all courses from all bootcamps
-    query = Course.find().populate({
-      path: 'bootcamp',
-      select: 'name description',
-    });
-  }
+    const courses = await Course.find({ bootcamp: req.params.bootcampId });
 
-  //* Response with status, count and data
-  const courses = await query;
-  res.status(200).json({
-    succcess: true,
-    count: courses.length,
-    data: courses,
-  });
+    return res.status(200).json({
+      success: true,
+      count: courses.length,
+      data: courses
+    })
+  } else {
+    res.status(200).json(res.advancedResults);
+  }
 });
 
 //* @desc Get Single course
